@@ -1,36 +1,31 @@
-import fs from "fs";
-import path from "path";
-import { Html, Head, Main, NextScript } from 'next/document'
+import Document, { DocumentContext } from "next/document"
+import { ServerStyleSheet } from "styled-components"
+import { Fragment } from "react"
 
-interface DocumentFiles {
-  sharedFiles: readonly string[];
-  pageFiles: readonly string[];
-  allFiles: readonly string[];
-}
-class InlineStylesHead extends Head {
-  getCssLinks({ allFiles }: DocumentFiles) {
-    return allFiles
-      .filter(file => file.endsWith(".css"))
-      .map(file => (
-        <style
-          key={file}
-          nonce={this.props.nonce}
-          dangerouslySetInnerHTML={{
-            __html: fs.readFileSync(path.join(".next", file), "utf-8"),
-          }}
-        />
-      ));
+export default class MyDocument extends Document {
+  static async getInitialProps(ctx: DocumentContext) {
+    const sheet = new ServerStyleSheet()
+    const originalRenderPage = ctx.renderPage
+
+    try {
+      ctx.renderPage = () =>
+        originalRenderPage({
+          enhanceApp: (App) => (props) =>
+            sheet.collectStyles(<App {...props} />),
+        })
+
+      const initialProps = await Document.getInitialProps(ctx)
+      return {
+        ...initialProps,
+        styles: [
+          <Fragment key="1">
+            {initialProps.styles}
+            {sheet.getStyleElement()}
+          </Fragment>,
+        ],
+      }
+    } finally {
+      sheet.seal()
+    }
   }
-}
-
-export default function Document() {
-  return (
-    <Html lang="en">
-      <InlineStylesHead />
-      <body>
-        <Main />
-        <NextScript />
-      </body>
-    </Html>
-  )
 }

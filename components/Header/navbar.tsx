@@ -179,11 +179,10 @@ const NavField = styled.div`
     }
   }
 
-  @media ${device.laptop} {
+  ${device.laptop} {
     display: flex;
     flex-direction: row-reverse;
     align-items: center;
-    padding: 0 1rem;
 
     > a.ham {
       display: none;
@@ -219,10 +218,6 @@ const Nav = styled.nav`
     flex-direction: column;
     align-items: center;
     padding: 0;
-
-    li {
-      padding: 1rem;
-    }
   }
 
   transition: 0.3s ease-out;

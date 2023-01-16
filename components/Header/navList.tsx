@@ -44,7 +44,8 @@ const NavList: React.FC<NavProps> = ({
 export default React.memo(NavList);
 
 const Li = styled.li`
-  min-width: 120px; 
+  min-width: 120px;
+  text-align: right;
 
   a {
     transition: 0.3s ease;

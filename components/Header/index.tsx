@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Image from "next/image";
 
 import Navbar from "./navbar";
+import { device } from '../../styles/media';
 
 const Header: React.FC = () => {
   return (
@@ -28,9 +29,18 @@ const H = styled.header`
   align-items: center;
   padding: 0.875rem 1.5rem;
   border-bottom: 1px solid #D9D9D9;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
 
   h1 {
     display: flex;
+  }
+
+  ${device.laptop} {
+    padding: 2rem 5rem 1.125rem 5rem;
   }
 `;
 
