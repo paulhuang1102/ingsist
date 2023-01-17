@@ -56,14 +56,14 @@ const Navbar: React.FC = () => {
 
   return (
     <NavField className={toggle ? "active" : ""}>
-      <a className="ham" onClick={toggleMenu}>
+      <button className="ham" onClick={toggleMenu}>
         <span />
         <span />
         <span />
         <span />
         <span />
         <span />
-      </a>
+      </button>
 
       <Nav>
         <ul>
@@ -138,7 +138,9 @@ const NavField = styled.div`
     }
   }
 
-  > a.ham {
+  > button.ham {
+    background: transparent;
+    border: 0;
     display: block;
     height: 26px;
     width: 26px;
@@ -184,7 +186,7 @@ const NavField = styled.div`
     flex-direction: row-reverse;
     align-items: center;
 
-    > a.ham {
+    > button.ham {
       display: none;
     }
 

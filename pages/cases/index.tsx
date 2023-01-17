@@ -1,6 +1,10 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import Header from '../../components/Header';
+import Head from "next/head";
+import styled from "styled-components";
+import Header from "@/components/Header";
+import Title from "@/components/Title";
+import Main from "@/components/Layout/main";
+import List from "@/components/List";
+import { caseItems } from "@/data/cases";
 
 export default function Cases() {
   return (
@@ -11,9 +15,32 @@ export default function Cases() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
+      <div>
         <Header />
-      </main>
+
+        <Main>
+          <section>
+            <Title text={"Case Studies"} count={29} />
+
+            <Ul>
+              {caseItems.map((item, i) => (
+                <List
+                  key={i}
+                  text={item.name}
+                  year={item.year}
+                  expandable={true}
+                  tags={item.tag}
+                  img={item.imageUrl}
+                />
+              ))}
+            </Ul>
+          </section>
+        </Main>
+      </div>
     </>
-  )
+  );
 }
+
+const Ul = styled.ul`
+  margin-top: 2rem;
+`;

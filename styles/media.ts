@@ -14,7 +14,7 @@ export const pixel: LooseObject = {
 
 export const size: LooseObject = Object.keys(pixel).reduce(
   (acc: LooseObject, item) => {
-    acc[item] = `${pixel[item]}px)`;
+    acc[item] = `${pixel[item]}px`;
     return acc;
   },
   {}

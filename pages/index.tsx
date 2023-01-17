@@ -27,13 +27,13 @@ export default function Home() {
         <Main>
           <SliderContainer>
             <Slider initialOffsetX={0} contentWidth={1440}>
-              {item1.map((item, i) => (
+              {[...item1, ...item2].map((item, i) => (
                 <SliderItem key={i} text={item} width={100} />
               ))}
             </Slider>
 
             <Slider initialOffsetX={100} contentWidth={1440}>
-              {item2.map((item, i) => (
+              {[...item2, ...item1].map((item, i) => (
                 <SliderItem key={i} text={item} width={100} />
               ))}
             </Slider>
