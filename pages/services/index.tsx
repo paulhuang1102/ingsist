@@ -1,6 +1,12 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import Header from '../../components/Header';
+import Head from "next/head";
+import styled from "styled-components";
+import Main from "@/components/Layout/main";
+import List from "@/components/List";
+import Title from "@/components/Title";
+import { clients, serviceItems } from "@/data/services";
+import Header from "@/components/Header";
+import ClientItem from "@/components/ClientItem";
+import { device } from "@/styles/media";
 
 export default function Services() {
   return (
@@ -11,9 +17,74 @@ export default function Services() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
+      <div>
         <Header />
-      </main>
+
+        <Main>
+          <Section>
+            <Title text={"Services"} />
+
+            <ServiceList>
+              {serviceItems.map((item, i) => (
+                <List key={i} text={item} />
+              ))}
+            </ServiceList>
+          </Section>
+
+          <Section>
+            <Title text={"Clients"} count={29} />
+
+            <ClientList>
+              {clients.map((c, i) => (
+                <ClientItem client={c} key={i} />
+              ))}
+            </ClientList>
+          </Section>
+        </Main>
+      </div>
     </>
-  )
+  );
 }
+
+const Section = styled.section`
+  margin-bottom: 3rem;
+
+  > ul {
+    margin-top: 2rem;
+  }
+`;
+
+const ServiceList = styled.ul`
+  display: grid;
+  grid-template-columns: 1fr;
+
+  ${device.laptop} {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  ${device.laptopL} {
+    grid-template-columns: repeat(2, 1fr);
+    padding-left: 25%; 
+  }
+
+`
+
+const ClientList = styled.ul`
+  display: grid;
+  gap: 1.125rem;
+  grid-template-columns: repeat(2, 1fr);
+
+  ${device.mobileL} {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  ${device.laptop} {
+    grid-template-columns: repeat(6, 1fr);
+    padding-left: 5%;
+  }
+  
+  ${device.laptopL} {
+    padding-left: 16%;
+  }
+`;

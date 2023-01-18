@@ -8,7 +8,7 @@ import Link from "next/link";
 
 interface Props {
   text: string;
-  year: number;
+  year?: number;
   expandable?: boolean;
   tags?: string[];
   img?: string;
@@ -31,7 +31,7 @@ const List: React.FC<Props> = ({
           }}
         >
           <h4>{text}</h4>
-          <span className={PlayfairDisplayFont.className}>{year}</span>
+          <span className={PlayfairDisplayFont.className}>{year ?? ''}</span>
         </div>
 
         {expandable && (
