@@ -6,6 +6,7 @@ import Main from "@/components/Layout/main";
 import { Process as ProcessType } from "@/models/process";
 import ProcessItem from "@/components/ProcessItem";
 import { fontColor } from "@/styles/theme";
+import { device } from "@/styles/media";
 
 const process: ProcessType[] = [
   {
@@ -46,8 +47,7 @@ const process: ProcessType[] = [
   },
   {
     title: "OPTIMIZATION",
-    description:
-      "優化迭代是為了帶來非凡的產品結果並幫助業務進一步的向上推展。",
+    description: "優化迭代是為了帶來非凡的產品結果並幫助業務進一步的向上推展。",
     img: "optimization.png",
   },
 ];
@@ -71,9 +71,13 @@ export default function Process() {
             利用以人為本的設計方法，我們創建適合您目標族群需求的解決方案，協助發展您的業務。
           </H1>
 
-          {process.map((p) => (
-            <ProcessItem process={p} key={p.title} />
-          ))}
+          <Wrapper>
+            {process.map((p) => (
+              <ProcessItem process={p} key={p.title} />
+            ))}
+
+            <div />
+          </Wrapper>
         </Main>
       </div>
     </>
@@ -86,4 +90,39 @@ const H1 = styled.h1`
   margin: 2rem 0;
   font-weight: 400;
   line-height: 1.75rem;
-`
+
+  ${device.laptop} {
+    margin: 4rem 0;
+  }
+`;
+
+const Wrapper = styled.div`
+  ${device.tablet} {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+
+    > div {
+      width: 45%;
+
+      &:nth-child(even) {
+        transform: translateY(150px);
+        margin-left: 3rem;
+      }
+
+      &:first-child {
+        margin-top: 2rem;
+      }
+    }
+
+    &::before {
+      display: block;
+      content: '';
+      height: 100%;
+      border-left: 0.5px solid #333;
+      position: absolute;
+      left: 50%;      
+    }
+  }
+`;

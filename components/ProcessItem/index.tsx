@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Image from "next/image";
 import { Process } from "@/models/process";
 import { fontColor } from "@/styles/theme";
+import { device } from "@/styles/media";
 
 interface Props {
   process: Process;
@@ -41,6 +42,10 @@ const Item = styled.div`
   &:nth-child(even) {
     h4 {
       text-align: left;
+
+      &::after {
+        left: -1.5rem;
+      }
     }
   }
 
@@ -52,11 +57,53 @@ const Item = styled.div`
     line-height: 3rem;
     white-space: break-spaces;
     text-align: right;
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      width: 4rem;
+      right: -1.5rem;
+      border-bottom: 0.5px solid #333;
+      top: 50%;
+      transform: translateY(-50%);
+    }
   }
 
   p {
     line-height: 1.5rem;
     margin: 1.5rem 0;
+  }
+
+  div {
+    width: 90%;
+  }
+
+  ${device.laptop} {
+    margin-bottom: 8rem;
+
+    h4 {
+      font-size: 2.25rem;
+    }
+
+    p {
+      line-height: 2rem;
+    }
+
+    div {
+      width: 80%;
+    }
+  }
+
+  ${device.laptopL} {
+    div {
+      width: 60%;
+    }
+
+    p {
+      padding: 0 3.5rem;
+      margin-bottom: 3rem;
+    }
   }
 `;
 
