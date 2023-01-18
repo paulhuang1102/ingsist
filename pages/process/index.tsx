@@ -65,19 +65,21 @@ export default function Process() {
         <Header />
 
         <Main>
-          <Title text="Process" />
+          <section>
+            <Title text="Process" />
 
-          <H1>
-            利用以人為本的設計方法，我們創建適合您目標族群需求的解決方案，協助發展您的業務。
-          </H1>
+            <H1>
+              利用以人為本的設計方法，我們創建適合您目標族群需求的解決方案，協助發展您的業務。
+            </H1>
 
-          <Wrapper>
-            {process.map((p) => (
-              <ProcessItem process={p} key={p.title} />
-            ))}
+            <Wrapper>
+              {process.map((p) => (
+                <ProcessItem process={p} key={p.title} />
+              ))}
 
-            <div />
-          </Wrapper>
+              <div />
+            </Wrapper>
+          </section>
         </Main>
       </div>
     </>
@@ -118,11 +120,11 @@ const Wrapper = styled.div`
 
     &::before {
       display: block;
-      content: '';
+      content: "";
       height: 100%;
       border-left: 0.5px solid #333;
       position: absolute;
-      left: 50%;      
+      left: 50%;
     }
   }
 `;

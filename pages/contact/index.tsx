@@ -1,6 +1,43 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import Header from '../../components/Header';
+import Head from "next/head";
+import Image from "next/image";
+import styled from "styled-components";
+import Header from "@/components/Header";
+import Main from "@/components/Layout/main";
+import Title from "@/components/Title";
+import { Social } from "@/models/contact";
+import ContactItem from "@/components/ContactItem";
+import { fontColor } from "@/styles/theme";
+import { PlayfairDisplayFont } from "@/styles/font";
+import ContactButton from "@/components/Button/contactButton";
+import { device } from "@/styles/media";
+
+const socials: Social[] = [
+  {
+    name: "Behance",
+    url: "https://google.com",
+    icon: "behance.svg",
+  },
+  {
+    name: "Facebook",
+    url: "https://google.com",
+    icon: "facebook.svg",
+  },
+  {
+    name: "Instagram",
+    url: "https://google.com",
+    icon: "instagram.svg",
+  },
+  {
+    name: "LinkedIn",
+    url: "https://google.com",
+    icon: "linkedin.svg",
+  },
+  {
+    name: "Medium",
+    url: "https://google.com",
+    icon: "medium.svg",
+  },
+];
 
 export default function Contact() {
   return (
@@ -11,9 +48,80 @@ export default function Contact() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
+      <div>
         <Header />
-      </main>
+
+        <Main row={true}>
+          <Section>
+            <Title text="Contact" />
+
+            <Container>
+              <div>
+                <h1>
+                  需要設計夥伴嗎？ <br />
+                  您可透過以下方式聯繫到我們
+                  <span className={PlayfairDisplayFont.className}>
+                    info@ingsist.com
+                  </span>
+                </h1>
+
+                <ContactButton onClick={() => {}} />
+              </div>
+
+              <GridDiv>
+                {socials.map((s) => (
+                  <ContactItem key={s.name} data={s} />
+                ))}
+              </GridDiv>
+            </Container>
+          </Section>
+        </Main>
+      </div>
     </>
-  )
+  );
 }
+
+const Section = styled.section`
+  h1 {
+    margin-top: 5rem;
+    margin-bottom: 2rem;
+    font-size: 1rem;
+    line-height: 2rem;
+    color: ${fontColor};
+    font-weight: 400;
+
+    span {
+      font-size: 2rem;
+      line-height: 3rem;
+      color: #111;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+  }
+`;
+
+const GridDiv = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-top: 4rem;
+`;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  ${device.laptop} {
+    flex-direction: row;
+
+    > div {
+      &:first-child {
+        flex: 1;
+      
+    }
+
+    &:last-child {
+      flex: 2;
+    }
+  }
+`;
