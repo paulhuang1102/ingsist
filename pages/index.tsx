@@ -40,8 +40,8 @@ export default function Home() {
           </SliderContainer>
 
           <Intro>
-            <h2>We build <br />the digital <br className="mobile" />experience,<br />and make it <br className="mobile" />happen.</h2>
-            <p>A Digital Product Agency<br />Based in Taipei, Taiwan.</p>
+            <h1>We build <br />the digital <br className="mobile" />experience,<br />and make it <br className="mobile" />happen.</h1>
+            <h2>A Digital Product Agency<br />Based in Taipei, Taiwan.</h2>
           </Intro>
         </Main>
       </div>
@@ -76,12 +76,12 @@ const Intro = styled.section`
     }
   }
 
-  h2 {
+  h1 {
     font-size: 2.5rem;
     margin-bottom: 1rem;
   }
 
-  p {
+  h2 {
     line-height: 1.25rem;
   }
 `

@@ -1,6 +1,56 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import Header from '../../components/Header';
+import Head from "next/head";
+import styled from "styled-components";
+import Title from "@/components/Title";
+import Header from "../../components/Header";
+import Main from "@/components/Layout/main";
+import { Process as ProcessType } from "@/models/process";
+import ProcessItem from "@/components/ProcessItem";
+import { fontColor } from "@/styles/theme";
+
+const process: ProcessType[] = [
+  {
+    title: "KICKOFF",
+    description:
+      "充分理解您的商業假設、業務目標、產品型態、用戶需求，共同制定接下來的合作及溝通計畫。",
+    img: "kickoff.png",
+  },
+  {
+    title: "RESEARCH",
+    description:
+      "進行完善的競品分析及用戶體驗研究，如深度訪談、觀察，必要時搭配量化數據分析，探詢用戶內心價值，從研究開展精準的產品策略。",
+    img: "research.png",
+  },
+  {
+    title: "STRATEGY",
+    description:
+      "跟隨用戶研究洞察結果，協助您訂定產品價值主張、用戶體驗策略、最適商業策略。在此階段也會逐步確立設計及開發流程。",
+    img: "strategy.png",
+  },
+  {
+    title: "CONCEPT & \nDESIGN",
+    description:
+      "依據策略方向，發想產品核心概念，建立資訊架構、介面流程、並打造設計系統，每一步都高度貼合目標用戶需求及您的商業目標。",
+    img: "concept.png",
+  },
+  {
+    title: "VALIDATION",
+    description:
+      "製作設計原型，並進行測試及驗證，運用啟發式評估、易用性測試、認知走查等方式，獲得真實用戶的回饋，作為設計修正依據，並減低開發成本。",
+    img: "validation.png",
+  },
+  {
+    title: "DEVELOPMENT",
+    description:
+      "忠實還原設計規劃，符合多元裝置運行環境，打造無接縫的流暢互動體驗，最終使您的產品能以高度質量展現於用戶面前。",
+    img: "development.png",
+  },
+  {
+    title: "OPTIMIZATION",
+    description:
+      "優化迭代是為了帶來非凡的產品結果並幫助業務進一步的向上推展。",
+    img: "optimization.png",
+  },
+];
 
 export default function Process() {
   return (
@@ -11,9 +61,29 @@ export default function Process() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
+      <div>
         <Header />
-      </main>
+
+        <Main>
+          <Title text="Process" />
+
+          <H1>
+            利用以人為本的設計方法，我們創建適合您目標族群需求的解決方案，協助發展您的業務。
+          </H1>
+
+          {process.map((p) => (
+            <ProcessItem process={p} key={p.title} />
+          ))}
+        </Main>
+      </div>
     </>
-  )
+  );
 }
+
+const H1 = styled.h1`
+  color: ${fontColor};
+  font-size: 1.25rem;
+  margin: 2rem 0;
+  font-weight: 400;
+  line-height: 1.75rem;
+`

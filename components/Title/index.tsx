@@ -11,9 +11,9 @@ interface Props {
 const Title: React.FC<Props> = ({ text, count }) => {
   return (
     <Container>
-      <h1 className={PlayfairDisplayFont.className}>
+      <h2 className={PlayfairDisplayFont.className}>
         {text}
-      </h1>
+      </h2>
 
       <span>
         {count ?? ''}
@@ -31,7 +31,7 @@ const Container = styled.div`
   border-bottom: 0.5px solid #333333;
   padding-bottom: 1rem;
 
-  h1 {
+  h2 {
     text-overflow: ellipsis;
     font-size: 2.5rem;
     white-space: break-spaces;
@@ -44,14 +44,14 @@ const Container = styled.div`
   }
 
   ${device.mobileL} {
-    h1 {
+    h2 {
       font-size: 3rem;
       line-height: 3.5rem;
     }
   }
 
   ${device.tablet} {
-    h1 {
+    h2 {
       font-size: 4rem;
       line-height: 4.5rem;
     }

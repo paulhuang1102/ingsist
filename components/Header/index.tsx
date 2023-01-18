@@ -7,14 +7,14 @@ import { device } from '../../styles/media';
 const Header: React.FC = () => {
   return (
     <H>
-      <h1>
+      <div>
         <Image
           src="/assets/images/logo.svg"
           alt="ingsist"
           width={120}
           height={42}
         />
-      </h1>
+      </div>
 
       <div>
         <Navbar />
@@ -34,10 +34,6 @@ const H = styled.header`
   left: 0;
   width: 100%;
   z-index: 1;
-
-  h1 {
-    display: flex;
-  }
 
   ${device.laptop} {
     padding: 2rem 5rem 1.125rem 5rem;
