@@ -27,7 +27,8 @@ const H = styled.h2`
   font-size: 1.25rem;
   display: flex;
   align-items: center;
-  margin-bottom: 4rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
 
   span {
     color: ${fontColor};
@@ -36,7 +37,7 @@ const H = styled.h2`
   .line {
     width: 55px;
     border-bottom: 1px solid ${fontColor};
-    margin: 0 1rem;
+    margin: 0 0.5rem;
   }
 `
 

@@ -4,9 +4,9 @@ import styled from "styled-components";
 import { CaseOverview } from "@/models/case";
 import Title from "./title";
 import Button from "@/components/Button";
-import { PlayfairDisplayFont } from "@/styles/font";
-import { fontColor, primaryColor } from "@/styles/theme";
+import { primaryColor } from "@/styles/theme";
 import Content from "./textContent";
+import Item from "./item";
 
 interface Props {
   overview: CaseOverview;
@@ -49,38 +49,11 @@ const CaseOverview: React.FC<Props> = ({ overview }) => {
   );
 };
 
-interface ItemProps {
-  title: string;
-  content: string;
-}
-
-const Item: React.FC<ItemProps> = ({ title, content }) => (
-  <Div>
-    <p>{title}</p>
-
-    <h4 className={PlayfairDisplayFont.className}>{content}</h4>
-  </Div>
-);
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-`;
-
-const Div = styled.div`
-  margin-bottom: 2.5rem;
-
-  p {
-    color: #828282;
-    font-size: 0.875rem;
-    margin-bottom: 0.5rem;
-  }
-
-  h4 {
-    font-size: 1rem;
-    line-height: 1rem;
-    color: ${fontColor};
-  }
+  margin-bottom: 5rem;
 `;
 
 const Tags = styled.div`

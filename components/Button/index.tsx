@@ -20,7 +20,7 @@ const Btn = styled.button<{ color?: string }>`
   padding: 0.75rem 1.5rem;
   border-radius: 24px;
   border: 1px solid ${fontColor};
-  /* background-color:  */
+  background-color: #FFF;
 `
 
 export default Button;

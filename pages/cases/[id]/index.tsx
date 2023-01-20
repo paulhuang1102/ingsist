@@ -3,8 +3,9 @@ import Image from "next/image";
 import Header from "@/components/Header";
 import CaseDetailHeader from "@/components/CaseDetail/header";
 import CaseOverview from "@/components/CaseDetail/overview";
-import CaseParagraph from '@/components/CaseDetail/paragraph';
+import CaseParagraph from "@/components/CaseDetail/paragraph";
 import Main from "@/components/Layout/main";
+import CaseCredit from "@/components/CaseDetail/credit";
 import { caseDetail } from "@/data/cases";
 
 export default function CaseDetail() {
@@ -19,15 +20,19 @@ export default function CaseDetail() {
       <div>
         <Header />
 
-        <CaseDetailHeader title={caseDetail.name} year={caseDetail.year} />
+        <CaseDetailHeader title={caseDetail.name} year={caseDetail.year} cover={caseDetail.coverUrl}/>
         <Main>
           <CaseOverview overview={caseDetail.overview} />
 
-          {
-            caseDetail.paragraph.map((d, i) => (
-              <CaseParagraph key={d.title} block={d} index={i + 2}/>
-            ))
-          }
+          {caseDetail.paragraph.map((d, i) => (
+            <CaseParagraph key={d.title} block={d} index={i + 2} />
+          ))}
+          {caseDetail.credit && (
+            <CaseCredit
+              index={caseDetail.paragraph.length + 2}
+              credit={caseDetail.credit}
+            />
+          )}
         </Main>
       </div>
     </>

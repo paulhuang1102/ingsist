@@ -90,8 +90,28 @@ export const caseDetail: CaseDetail = {
   credit: {
     members: [
       {
-        title: "creative Director",
+        title: "Creative Director",
         name: "Holden Chen",
+      },
+      {
+        title: "Design Director",
+        name: "Sushi Su",
+      },
+      {
+        title: "Jr. UI Designer",
+        name: "Tina",
+      },
+      {
+        title: "UX Designer",
+        name: "Lisa Huang",
+      },
+      {
+        title: "Product Manerger",
+        name: "Emily Peng",
+      },
+      {
+        title: "UX Researcher",
+        name: "Amber Tsai",
       },
     ],
   },
