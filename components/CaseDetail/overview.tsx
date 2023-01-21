@@ -7,6 +7,7 @@ import Button from "@/components/Button";
 import { primaryColor } from "@/styles/theme";
 import Content from "./textContent";
 import Item from "./item";
+import { device } from "@/styles/media";
 
 interface Props {
   overview: CaseOverview;
@@ -17,48 +18,76 @@ const CaseOverview: React.FC<Props> = ({ overview }) => {
     <Container>
       <Title text="Overview" index={1} />
 
-      <Item title={"Client"} content={overview.client} />
+      <div>
+        <Item title={"Client"} content={overview.client} />
 
-      {overview.awards.length > 0 && (
-        <Item
-          title={"Awards"}
-          content={overview.awards.map((v) => `${v}\n`).join("")}
-        />
-      )}
-
-      <Tags>
-        {overview.tags.map((tag) => (
-          <Button key={tag} text={tag} onClick={() => {}} />
-        ))}
-      </Tags>
-
-      <Content text={overview.description} />
-
-      {overview.website && (
-        <A href={overview.website} target="_blank" rel="noreferrer">
-          SEE LIVE WEBSITE
-          <Image
-            src="/assets/images/arrow_right.svg"
-            width={24}
-            height={24}
-            alt="Arrow right"
+        {overview.awards.length > 0 && (
+          <Item
+            title={"Awards"}
+            content={overview.awards.map((v) => `${v}\n`).join("")}
           />
-        </A>
-      )}
+        )}
+      </div>
+
+      <div>
+        <Tags>
+          {overview.tags.map((tag) => (
+            <Button key={tag} text={tag} onClick={() => {}} />
+          ))}
+        </Tags>
+
+        <Content text={overview.description} />
+
+        {overview.website && (
+          <A href={overview.website} target="_blank" rel="noreferrer">
+            SEE LIVE WEBSITE
+            <Image
+              src="/assets/images/arrow_right.svg"
+              width={24}
+              height={24}
+              alt="Arrow right"
+            />
+          </A>
+        )}
+      </div>
     </Container>
   );
 };
-
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 5rem;
+
+  > div {
+    display: flex;
+    flex-direction: column;
+  }
+
+  ${device.laptop} {
+    flex-direction: row;
+    align-items: flex-start;
+    margin-bottom: 8.5rem;
+
+    > div {
+      > *:first-child {
+        margin-top: 0;
+      }
+    }
+
+    > * {
+      flex: 1;
+
+      &:last-child {
+        flex: 2;
+      }
+    }
+  }
 `;
 
 const Tags = styled.div`
   display: flex;
-  margin-bottom: 1.75rem;
+  margin: 1.75rem 0;
   flex-wrap: wrap;
 
   > * {

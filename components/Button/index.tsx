@@ -21,6 +21,7 @@ const Btn = styled.button<{ color?: string }>`
   border-radius: 24px;
   border: 1px solid ${fontColor};
   background-color: #FFF;
+  cursor: pointer;
 `
 
 export default Button;

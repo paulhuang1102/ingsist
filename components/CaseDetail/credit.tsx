@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { CaseCredit } from "@/models/case";
 import Title from "./title";
 import Item from "./item";
+import { device } from "@/styles/media";
 
 interface Props {
   index: number;
@@ -25,10 +26,29 @@ const Credit: React.FC<Props> = ({ index, credit }) => {
 
 const Container = styled.div`
   .grid {
-    margin-top: 4rem;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     row-gap: 2rem;
+  }
+
+  ${device.laptop} {
+    display: flex;
+    align-items: flex-start;
+
+    > * {
+      &:first-child {
+        flex: 1;
+      }
+
+      &:last-child {
+        flex: 2;
+      }
+    }
+
+    .grid {
+      margin-top: 0;
+      grid-template-columns: repeat(4, 1fr);
+    }
   }
 `;
 

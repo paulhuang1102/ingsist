@@ -17,7 +17,7 @@ const Item: React.FC<Props> = ({ title, content }) => (
 );
 
 const Div = styled.div`
-  margin-bottom: 2.5rem;
+  margin-top: 2.5rem;
 
   p {
     color: #828282;

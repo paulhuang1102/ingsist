@@ -1,3 +1,4 @@
+import { device } from "@/styles/media";
 import React from "react";
 import styled from "styled-components";
 
@@ -37,6 +38,22 @@ const Header = styled.div<{ cover: string }>`
     font-size: 0.875rem;
     flex: 1;
     text-align: right;
+  }
+
+  ${device.laptop} {
+    justify-content: flex-start;
+    padding: 2rem 5rem;
+    padding-top: 8.5rem;
+
+
+    h1 {
+      font-size: 4rem;
+      flex: inherit;
+    }
+
+    p {
+      text-align: left;
+    }
   }
 `;
 

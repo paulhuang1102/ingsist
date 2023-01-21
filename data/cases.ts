@@ -31,7 +31,7 @@ export const caseDetail: CaseDetail = {
   id: "1",
   name: "Printer Integration",
   year: 2022,
-  coverUrl: "https://picsum.photos/200/300",
+  coverUrl: "https://picsum.photos/400/300",
   overview: {
     client: "TSC Auto ID (H.K.) Ltd.",
     awards: ["AWWWWARD 2022", "UXDA 2021"],
@@ -50,7 +50,7 @@ export const caseDetail: CaseDetail = {
         },
         {
           type: CaseContentType.image,
-          data: ["https://picsum.photos/200/300"],
+          data: ["https://picsum.photos/400/300"],
         },
       ],
     },
@@ -67,7 +67,7 @@ export const caseDetail: CaseDetail = {
         },
         {
           type: CaseContentType.image,
-          data: ["https://picsum.photos/200/300"],
+          data: ["https://picsum.photos/400/300"],
         },
         {
           type: CaseContentType.header,
@@ -80,8 +80,8 @@ export const caseDetail: CaseDetail = {
         {
           type: CaseContentType.image,
           data: [
-            "https://picsum.photos/200/300",
-            "https://picsum.photos/200/300",
+            "https://picsum.photos/400/300",
+            "https://picsum.photos/400/300",
           ],
         },
       ],
