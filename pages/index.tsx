@@ -1,5 +1,6 @@
+import { useEffect } from "react";
 import Head from "next/head";
-import Image from "next/image";
+import Modal from "react-modal";
 import styled from "styled-components";
 import Header from "@/components/Header";
 import Slider from "@/components/Slider";
@@ -7,11 +8,20 @@ import SliderItem from "@/components/Slider/item";
 import { homeItems } from "@/data/home";
 import { primaryColor } from "@/styles/theme";
 import { device } from "@/styles/media";
+import useModal from "@/hooks/useModal";
+import TalkModal from "@/components/Modal/talk";
 
 export default function Home() {
   const center = Math.round(homeItems.length / 2);
   const item1 = homeItems.slice(0, center);
   const item2 = homeItems.slice(center, homeItems.length);
+
+  const { isOpen, modal, toggle, setModal } = useModal({});
+
+  useEffect(() => {
+    setModal(<TalkModal close={toggle} />)
+  }, [setModal, toggle])
+
 
   return (
     <>
@@ -44,6 +54,17 @@ export default function Home() {
             <h2>A Digital Product Agency<br />Based in Taipei, Taiwan.</h2>
           </Intro>
         </Main>
+
+        <Modal
+        isOpen={isOpen}
+        // onAfterOpen={afterOpenModal}
+        // onRequestClose={closeModal}
+        className="Modal"
+        overlayClassName="Overlay"
+        contentLabel="Example Modal"
+      >
+        {modal}
+      </Modal>
       </div>
     </>
   );

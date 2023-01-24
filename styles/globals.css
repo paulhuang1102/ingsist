@@ -29,3 +29,23 @@ ul {
   list-style: none;
   padding: 0;
 }
+
+.Modal {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  right: 1rem;
+  bottom: 1rem;
+  overflow: scroll;
+  outline: none;
+}
+
+.Overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+  background-color: #DDD;
+}
