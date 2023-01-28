@@ -1,26 +1,35 @@
-import React, { ChangeEvent, useState, MouseEvent } from "react";
+import React, { ChangeEvent, useCallback, useState } from "react";
 import Image from "next/image";
 import styled from "styled-components";
 import { homeItems } from "@/data/home";
 import Button from "@/components/Button";
 import { PlayfairDisplayFont } from "@/styles/font";
+import CircleButton from "../Button/circleButton";
+import { primaryColor } from "@/styles/theme";
+import { device } from "@/styles/media";
 
 interface Props {
   close: Function;
 }
 
-const boudget = [
+const boudgets = [
   "< NT $ 50W",
   "NT $ 50W ~ 100W",
   "NT $ 100W ~ 200W",
   "NT $ 200W +",
 ];
 
+function mailTo(email: string, subject: string, body: string) {
+  // window.location.href = `mailto:zedozon@gmail.com?subject=${subject}&body=${body}`;
+  window.open(`mailto:${email}?subject=${subject}&body=${body}`);
+}
+
 const TalkModal: React.FC<Props> = ({ close }) => {
   const [name, setName] = useState<string>("");
   const [wc, setWc] = useState<string>("");
   const [discuss, setDiscuss] = useState<string>("");
-  const [bouget, setBouget] = useState<string>("");
+  const [boudget, setBouget] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
 
   const handleTopic = (v: string) => {
     setDiscuss(v);
@@ -35,10 +44,21 @@ const TalkModal: React.FC<Props> = ({ close }) => {
     const { dataset, value } = target;
     if (dataset.value === "name") {
       setName(value);
-    } else {
+    } else if (dataset.value === "wc") {
       setWc(value);
+    } else if (dataset.value === "email") {
+      setEmail(value);
     }
   };
+
+  const submit = useCallback(() => {
+    mailTo(
+      "support@ingsist.com",
+      "Hello, ingsist creative",
+      `Hi, my name is ${name} from ${wc} %0D%0AI'd like to discuss ${discuss} project idea and design consult %0D%0AA boudget for this project is ${boudget} %0D%0AContact me back at ${email}`
+    );
+  }, [discuss, email, name, wc, boudget]);
+
   return (
     <Container className={PlayfairDisplayFont.className}>
       <Title>
@@ -100,12 +120,12 @@ const TalkModal: React.FC<Props> = ({ close }) => {
         <Select>
           <p>A boudget for this project is</p>
           <div>
-            {boudget.map((b) => (
+            {boudgets.map((b) => (
               <Button
                 key={b}
                 text={b}
                 onClick={() => handleBouget(b)}
-                selected={bouget === b}
+                selected={boudget === b}
                 size={0.875}
               />
             ))}
@@ -115,7 +135,19 @@ const TalkModal: React.FC<Props> = ({ close }) => {
         <Back>
           <p>Contact me back at</p>
 
-          <input placeholder="YOUR EMAIL" />
+          <div>
+            <input
+              placeholder="YOUR EMAIL"
+              value={email}
+              onChange={handleInput}
+              data-value="email"
+            />
+            <CircleButton
+              text="SUBMIT"
+              onClick={submit}
+              bgColor={primaryColor}
+            />
+          </div>
         </Back>
       </div>
     </Container>
@@ -124,7 +156,7 @@ const TalkModal: React.FC<Props> = ({ close }) => {
 
 const Client = styled.div`
   margin-bottom: 2.75rem;
-  border-bottom: 1px solid #F2F2F2;
+  border-bottom: 1px solid #f2f2f2;
 
   > div {
     display: flex;
@@ -143,8 +175,7 @@ const Client = styled.div`
 `;
 
 const Select = styled.div`
-  border-bottom: 1px solid #F2F2F2;
-  /* padding-bottom: 2.5rem; */
+  border-bottom: 1px solid #f2f2f2;
 
   > div {
     padding: 1rem 0;
@@ -155,8 +186,23 @@ const Select = styled.div`
     margin-right: 0.5rem;
   }
 
+  
   .mb {
     margin-bottom: 1.5rem;
+  }
+
+  ${device.laptop} {
+    > div {
+      padding-right: 40%;
+    }
+
+    .mb {
+      margin-bottom: 0;
+    }
+
+    button {
+      font-size: 1rem;
+    }
   }
 `;
 
@@ -166,6 +212,8 @@ const Container = styled.div`
   width: 100%;
   background-color: #fff;
   padding: 1.5rem;
+  border-radius: 0 0 64px 0;
+
 
   > div {
     display: flex;
@@ -200,11 +248,55 @@ const Container = styled.div`
       font-size: 0.875rem;
     }
   }
+
+  ${device.laptop} {
+    border-radius: 0 0 112px 0;
+    padding: 2rem;
+
+    > div {
+      flex-direction: row;
+      border-bottom: 1px solid #f2f2f2;
+      padding-bottom: 2rem;
+      margin-bottom: 3rem;
+
+      > div {
+        flex: 1;
+        border-bottom: 0;
+
+        &:nth-child(even) {
+          margin-left: 80px;
+          position: relative;
+
+          &::before {
+            content: "";
+            position: absolute;
+            height: 100%;
+            border-left: 1px solid #f2f2f2;
+            left: -40px;
+          }
+        }
+      }
+
+      &:last-child {
+        border: 0;
+      }
+    }
+  }
 `;
 
 const Title = styled.div`
   padding-bottom: 1.25rem;
   border-bottom: 1px solid #bdbdbd;
+
+  ${device.laptop} {
+    padding-bottom: 2.5rem;
+
+    p {
+      font-size: 2rem;
+    }
+
+    justify-content: space-between;
+  }
 `;
 
 const Back = styled.div`
@@ -218,6 +310,30 @@ const Back = styled.div`
 
   input {
     flex: 1;
+    margin-right: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  > div {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  ${device.laptop} {
+    margin-top: 0;
+
+    > div {
+      flex-direction: column;
+    }
+
+    input {
+      width: 100%;
+      margin-bottom: 4rem;
+    }
+
+    button {
+      align-self: flex-end;
+    }
   }
 `;
 

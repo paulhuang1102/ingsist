@@ -10,6 +10,7 @@ import { primaryColor } from "@/styles/theme";
 import { device } from "@/styles/media";
 import useModal from "@/hooks/useModal";
 import TalkModal from "@/components/Modal/talk";
+import CircleButton from "@/components/Button/circleButton";
 
 export default function Home() {
   const center = Math.round(homeItems.length / 2);
@@ -19,9 +20,8 @@ export default function Home() {
   const { isOpen, modal, toggle, setModal } = useModal({});
 
   useEffect(() => {
-    setModal(<TalkModal close={toggle} />)
-  }, [setModal, toggle])
-
+    setModal(<TalkModal close={toggle} />);
+  }, [setModal, toggle]);
 
   return (
     <>
@@ -50,21 +50,37 @@ export default function Home() {
           </SliderContainer>
 
           <Intro>
-            <h1>We build <br />the digital <br className="mobile" />experience,<br />and make it <br className="mobile" />happen.</h1>
-            <h2>A Digital Product Agency<br />Based in Taipei, Taiwan.</h2>
+            <h1>
+              We build <br />
+              the digital <br className="mobile" />
+              experience,
+              <br />
+              and make it <br className="mobile" />
+              happen.
+            </h1>
+            <h2>
+              A Digital Product Agency
+              <br />
+              Based in Taipei, Taiwan.
+            </h2>
           </Intro>
+
+          <FloatContainer>
+            <CircleButton text={`LET'S\nTALK`} onClick={toggle} />
+          </FloatContainer>
         </Main>
+        
 
         <Modal
-        isOpen={isOpen}
-        // onAfterOpen={afterOpenModal}
-        // onRequestClose={closeModal}
-        className="Modal"
-        overlayClassName="Overlay"
-        contentLabel="Example Modal"
-      >
-        {modal}
-      </Modal>
+          isOpen={isOpen}
+          // onAfterOpen={afterOpenModal}
+          // onRequestClose={closeModal}
+          className="Modal"
+          overlayClassName="Overlay"
+          contentLabel="Example Modal"
+        >
+          {modal}
+        </Modal>
       </div>
     </>
   );
@@ -92,7 +108,7 @@ const Intro = styled.section`
       display: block;
 
       ${device.laptop} {
-        display: none
+        display: none;
       }
     }
   }
@@ -105,4 +121,10 @@ const Intro = styled.section`
   h2 {
     line-height: 1.25rem;
   }
+`;
+
+const FloatContainer = styled.div`
+  position: fixed;
+  bottom: 60px;
+  right: 1.5rem; 
 `
