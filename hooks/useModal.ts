@@ -4,7 +4,7 @@ interface Props {
   el?: ReactNode;
 }
 const useModal = ({ el }: Props) => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const [modal, setModal] = useState(el);
 
   const toggle = useCallback(() => setIsOpen(!isOpen), [isOpen]);

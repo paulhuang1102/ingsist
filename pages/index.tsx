@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect, useState, useRef } from "react";
 import Head from "next/head";
 import Modal from "react-modal";
 import styled from "styled-components";
@@ -11,17 +11,60 @@ import { device } from "@/styles/media";
 import useModal from "@/hooks/useModal";
 import TalkModal from "@/components/Modal/talk";
 import CircleButton from "@/components/Button/circleButton";
+import SliderHighlight from "@/components/Slider/highlight";
 
 export default function Home() {
   const center = Math.round(homeItems.length / 2);
   const item1 = homeItems.slice(0, center);
   const item2 = homeItems.slice(center, homeItems.length);
-
   const { isOpen, modal, toggle, setModal } = useModal({});
+  const [highlight, setHighlight] = useState({
+    pos: {
+      x: 0,
+      y: 0,
+    },
+    show: false,
+  });
+  const posRef = useRef({
+    x: 0,
+    y: 0,
+  });
+
+  const timeout = useRef<ReturnType<typeof setTimeout>>();
 
   useEffect(() => {
     setModal(<TalkModal close={toggle} />);
   }, [setModal, toggle]);
+
+  const handleTag = useCallback((e: MouseEvent) => {
+    posRef.current = {
+      x: e.clientX,
+      y: e.clientY,
+    };
+
+    clearTimeout(timeout.current);
+
+    timeout.current = setTimeout(() => {
+      setHighlight({
+        pos: {
+          x: posRef.current.x,
+          y: posRef.current.y,
+        },
+        show: true,
+      });
+    }, 200);
+  }, []);
+
+  const handleHide = useCallback(() => {
+    setHighlight({
+      // ...highlight,
+      pos: {
+        x: posRef.current.x,
+        y: posRef.current.y,
+      },
+      show: false,
+    });
+  }, []);
 
   return (
     <>
@@ -36,17 +79,29 @@ export default function Home() {
 
         <Main>
           <SliderContainer>
-            <Slider initialOffsetX={0} contentWidth={1440}>
+            <Slider
+              initialOffsetX={0}
+              contentWidth={1440}
+              mouseCallback={handleTag}
+              hideCallback={handleHide}
+            >
               {[...item1, ...item2].map((item, i) => (
                 <SliderItem key={i} text={item} width={100} />
               ))}
             </Slider>
 
-            <Slider initialOffsetX={100} contentWidth={1440}>
+            <Slider
+              initialOffsetX={100}
+              contentWidth={1440}
+              mouseCallback={handleTag}
+              hideCallback={handleHide}
+            >
               {[...item2, ...item1].map((item, i) => (
                 <SliderItem key={i} text={item} width={100} />
               ))}
             </Slider>
+
+            <SliderHighlight pos={highlight.pos} show={highlight.show} />
           </SliderContainer>
 
           <Intro>
@@ -69,7 +124,6 @@ export default function Home() {
             <CircleButton text={`LET'S\nTALK`} onClick={toggle} />
           </FloatContainer>
         </Main>
-        
 
         <Modal
           isOpen={isOpen}
@@ -126,5 +180,5 @@ const Intro = styled.section`
 const FloatContainer = styled.div`
   position: fixed;
   bottom: 60px;
-  right: 1.5rem; 
-`
+  right: 1.5rem;
+`;

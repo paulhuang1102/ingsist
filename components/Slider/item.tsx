@@ -11,7 +11,7 @@ const SliderItem: React.FC<Props> =({
   text
 }) => {
   return (
-    <Item style={{ minWidth: width }}>
+    <Item className='slider-tag' style={{ minWidth: width }}>
       {text}
     </Item>
   )
@@ -26,6 +26,7 @@ const Item = styled.h4`
   font-weight: 800;
   color: #FFFFFF;
   justify-content: center;
+  cursor: pointer;
 
 `
 
