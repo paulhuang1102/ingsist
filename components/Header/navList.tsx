@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import styled from "styled-components";
 import { fontColor } from "@/styles/theme";
+import { device } from "@/styles/media";
 interface NavProps {
   link: string;
   title: string;
@@ -46,10 +47,11 @@ export default React.memo(NavList);
 const Li = styled.li`
   min-width: 120px;
   text-align: right;
+  margin-bottom: 3rem;
 
   a {
     transition: 0.3s ease;
-    font-size: 1.125rem;
+    font-size: 2.5rem;
     font-weight: 400;
     position: relative;
     color: #111111;
@@ -76,6 +78,14 @@ const Li = styled.li`
       &::after {
         opacity: 1;
       }
+    }
+  }
+
+  ${device.laptop} {
+    margin-bottom: 0;
+
+    a {
+      font-size: 1.125rem;
     }
   }
 `;

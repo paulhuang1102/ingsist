@@ -109,22 +109,22 @@ const NavField = styled.div`
 
     &:nth-child(1) {
       left: 0;
-      top: 4px;
+      top: 5px;
     }
 
     &:nth-child(2) {
       left: 50%;
-      top: 4px;
+      top: 5px;
     }
 
     &:nth-child(5) {
       left: 0;
-      top: 18.5px;
+      top: 18px;
     }
 
     &:nth-child(6) {
       left: 50%;
-      top: 18.5px;
+      top: 18px;
     }
 
     &:nth-child(3) {
@@ -145,6 +145,7 @@ const NavField = styled.div`
     height: 26px;
     width: 26px;
     position: relative;
+    z-index: 999;
 
     span {
       display: block;
@@ -185,6 +186,7 @@ const NavField = styled.div`
     display: flex;
     flex-direction: row-reverse;
     align-items: center;
+    z-index: inherit;
 
     > button.ham {
       display: none;
@@ -204,15 +206,17 @@ const NavField = styled.div`
 
 const Nav = styled.nav`
   position: fixed;
-  top: 44px;
+  top: 0;
   left: 0;
   right: 0;
   bottom: 100vh;
   z-index: 99;
-  background: rgba(0, 0, 0, 0.8);
-  color: white;
+  background: #FFF;
   overflow: hidden;
   overscroll-behavior: contain;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   ul {
     list-style: none;
