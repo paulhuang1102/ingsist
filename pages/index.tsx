@@ -1,3 +1,4 @@
+import { GetServerSideProps, NextPage } from "next";
 import { useCallback, useEffect, useState, useRef } from "react";
 import Head from "next/head";
 import Modal from "react-modal";
@@ -5,18 +6,22 @@ import styled from "styled-components";
 import Header from "@/components/Header";
 import Slider from "@/components/Slider";
 import SliderItem from "@/components/Slider/item";
-import { homeItems } from "@/data/home";
+// import { homeItems } from "@/data/home";
 import { primaryColor } from "@/styles/theme";
 import { device } from "@/styles/media";
 import useModal from "@/hooks/useModal";
 import TalkModal from "@/components/Modal/talk";
 import CircleButton from "@/components/Button/circleButton";
 import SliderHighlight from "@/components/Slider/highlight";
+import { getTags } from "@/utils/firebase";
 
-export default function Home() {
-  const center = Math.round(homeItems.length / 2);
-  const item1 = homeItems.slice(0, center);
-  const item2 = homeItems.slice(center, homeItems.length);
+interface Props {
+  tags: string[];
+}
+const Home: NextPage<Props> = ({ tags }) => {
+  const center = Math.round(tags.length / 2);
+  const item1 = tags.slice(0, center);
+  const item2 = tags.slice(center, tags.length);
   const { isOpen, modal, toggle, setModal } = useModal({});
   const [highlight, setHighlight] = useState({
     pos: {
@@ -52,7 +57,7 @@ export default function Home() {
         },
         show: true,
       });
-    }, 200);
+    }, 300);
   }, []);
 
   const handleHide = useCallback(() => {
@@ -138,7 +143,7 @@ export default function Home() {
       </div>
     </>
   );
-}
+};
 
 const Main = styled.main`
   background: ${primaryColor};
@@ -182,3 +187,20 @@ const FloatContainer = styled.div`
   bottom: 60px;
   right: 1.5rem;
 `;
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  let tags = [];
+  try {
+    tags = await getTags();
+  } catch(err) {
+    console.error(err);
+  }
+
+  return {
+    props: {
+      tags
+    }
+  }
+} 
+
+export default Home;

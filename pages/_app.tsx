@@ -1,7 +1,9 @@
-import type { AppProps } from "next/app";
+import type { AppContext, AppProps } from "next/app";
+import type { GetServerSideProps } from "next"
 import { InterFont } from "@/styles/font";
 import "@/styles/globals.css";
 import Modal from "react-modal";
+import { getTags } from "@/utils/firebase";
 
 Modal.setAppElement("#__next");
 
