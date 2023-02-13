@@ -4,6 +4,7 @@ import { InterFont } from "@/styles/font";
 import "@/styles/globals.css";
 import Modal from "react-modal";
 import { getTags } from "@/utils/firebase";
+import CookiesToast from "@/components/AllowCookies";
 
 Modal.setAppElement("#__next");
 
@@ -15,8 +16,11 @@ export default function App({ Component, pageProps }: AppProps) {
           font-family: ${InterFont.style.fontFamily};
         }
       `}</style>
-    
-      <Component {...pageProps} />
+
+      <div>
+        <Component {...pageProps} />
+        <CookiesToast />
+      </div>
     </>
   );
 }

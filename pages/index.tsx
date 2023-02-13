@@ -86,7 +86,7 @@ const Home: NextPage<Props> = ({ tags }) => {
           <SliderContainer>
             <Slider
               initialOffsetX={0}
-              contentWidth={1440}
+              contentWidth={1920}
               mouseCallback={handleTag}
               hideCallback={handleHide}
             >
@@ -97,7 +97,7 @@ const Home: NextPage<Props> = ({ tags }) => {
 
             <Slider
               initialOffsetX={100}
-              contentWidth={1440}
+              contentWidth={1920}
               mouseCallback={handleTag}
               hideCallback={handleHide}
             >
