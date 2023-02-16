@@ -10,6 +10,7 @@ import { fontColor } from "@/styles/theme";
 import { PlayfairDisplayFont } from "@/styles/font";
 import ContactButton from "@/components/Button/contactButton";
 import { device } from "@/styles/media";
+import Footer from '@/components/Footer';
 
 const socials: Social[] = [
   {
@@ -76,6 +77,8 @@ export default function Contact() {
             </Container>
           </Section>
         </Main>
+
+        <Footer />
       </div>
     </>
   );

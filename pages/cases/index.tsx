@@ -5,6 +5,7 @@ import Title from "@/components/Title";
 import Main from "@/components/Layout/main";
 import List from "@/components/List";
 import { caseItems } from "@/data/cases";
+import Footer from '@/components/Footer';
 
 export default function Cases() {
   return (
@@ -36,6 +37,8 @@ export default function Cases() {
             </Ul>
           </section>
         </Main>
+
+        <Footer />
       </div>
     </>
   );

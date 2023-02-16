@@ -7,6 +7,7 @@ import { clients, serviceItems } from "@/data/services";
 import Header from "@/components/Header";
 import ClientItem from "@/components/ClientItem";
 import { device } from "@/styles/media";
+import Footer from '@/components/Footer';
 
 export default function Services() {
   return (
@@ -41,6 +42,7 @@ export default function Services() {
             </ClientList>
           </Section>
         </Main>
+        <Footer />
       </div>
     </>
   );

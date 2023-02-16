@@ -7,6 +7,7 @@ import CaseParagraph from "@/components/CaseDetail/paragraph";
 import Main from "@/components/Layout/main";
 import CaseCredit from "@/components/CaseDetail/credit";
 import { caseDetail } from "@/data/cases";
+import Footer from '@/components/Footer';
 
 export default function CaseDetail() {
   return (
@@ -34,6 +35,8 @@ export default function CaseDetail() {
             />
           )}
         </Main>
+
+        <Footer showBack={true} />
       </div>
     </>
   );
