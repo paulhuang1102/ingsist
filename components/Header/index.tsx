@@ -1,20 +1,20 @@
 import styled from "styled-components";
 import Image from "next/image";
-
+import Link from "next/link";
 import Navbar from "./navbar";
 import { device } from '../../styles/media';
 
 const Header: React.FC = () => {
   return (
     <H>
-      <div>
+      <Link href={'/'}>
         <Image
           src="/assets/images/logo.svg"
           alt="ingsist"
           width={120}
           height={42}
         />
-      </div>
+      </Link>
 
       <div>
         <Navbar />

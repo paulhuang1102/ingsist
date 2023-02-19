@@ -13,7 +13,6 @@ const Footer: React.FC<Props> = ({ showBack = false }) => {
   const router = useRouter();
 
   const handleBack = useCallback(() => {
-    console.log(window.history);
     if (window.history.length > 1) {
       router.back();
     } else {

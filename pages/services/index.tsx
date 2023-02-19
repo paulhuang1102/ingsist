@@ -27,7 +27,7 @@ export default function Services() {
 
             <ServiceList>
               {serviceItems.map((item, i) => (
-                <List key={i} text={item} />
+                <List key={i} text={item}/>
               ))}
             </ServiceList>
           </Section>

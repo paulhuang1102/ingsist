@@ -12,6 +12,7 @@ interface Props {
   expandable?: boolean;
   tags?: string[];
   img?: string;
+  id?: string;
 }
 
 const List: React.FC<Props> = ({
@@ -20,6 +21,7 @@ const List: React.FC<Props> = ({
   expandable = false,
   tags,
   img,
+  id
 }) => {
   return (
     <L>
@@ -27,11 +29,11 @@ const List: React.FC<Props> = ({
         <div
           style={{
             display: "flex",
-            justifyContent: "space-between",
+            // justifyContent: "space-between",
           }}
         >
           <h4>{text}</h4>
-          <span className={PlayfairDisplayFont.className}>{year ?? ''}</span>
+          <span className={PlayfairDisplayFont.className}>{year ?? ""}</span>
         </div>
 
         {expandable && (
@@ -40,7 +42,7 @@ const List: React.FC<Props> = ({
               <Tag key={v} text={v} />
             ))}
 
-            <Link href="/" className={PlayfairDisplayFont.className}>
+            <Link href={`/cases/${id}`} className={PlayfairDisplayFont.className}>
               See More
               <Image
                 src="/assets/images/arrow_right_light.svg"
@@ -66,7 +68,7 @@ const List: React.FC<Props> = ({
           width={24}
           height={24}
           alt="Arrow right"
-          className="hover-hidden"
+          className={`arrow ${expandable ? "hover-hidden" : ""}`}
         />
       </RightContainer>
     </L>
@@ -118,7 +120,7 @@ const L = styled.li`
       .hover {
         /* For expand, Set any number greater than max height in element */
         max-height: 300px;
-        transition-delay: 0.2s;
+        transition-delay: 0.5s;
         transition: 1s;
       }
 
@@ -151,11 +153,17 @@ const RightContainer = styled.div`
   display: flex;
   margin-left: 1rem;
   align-items: center;
+  position: relative;
 
   .hover > img {
     width: 320px;
     height: 180px;
     object-fit: cover;
+  }
+
+  .arrow {
+    position: absolute;
+    right: 0;
   }
 `;
 

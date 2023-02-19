@@ -5,6 +5,7 @@ export enum CaseContentType {
 }
 
 export type CaseMeta = {
+  id: string;
   name: string;
   year: number;
   tag: string[];

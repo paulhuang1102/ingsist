@@ -31,10 +31,14 @@ const Button = styled.button<{ bgColor: string; length: number }>`
   color: #fff;
   white-space: break-spaces;
   font-weight: 600;
+  cursor: pointer;
 
-  ${device.laptop} {
+  ${device.tablet} {
     height: ${(props) => props.length * 2}px;
     width: ${(props) => props.length * 2}px;
+    white-space: nowrap;
+    font-size: 1.25rem;
+    font-weight: 600;
   }
 `;
 

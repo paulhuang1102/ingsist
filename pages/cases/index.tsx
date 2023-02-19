@@ -24,14 +24,15 @@ export default function Cases() {
             <Title text={"Case Studies"} count={29} />
 
             <Ul>
-              {caseItems.map((item, i) => (
+              {caseItems.map((item) => (
                 <List
-                  key={i}
+                  key={item.id}
                   text={item.name}
                   year={item.year}
                   expandable={true}
                   tags={item.tag}
                   img={item.imageUrl}
+                  id={item.id}
                 />
               ))}
             </Ul>

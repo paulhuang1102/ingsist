@@ -2,24 +2,28 @@ import { CaseContentType, CaseDetail, CaseMeta } from "@/models/case";
 
 export const caseItems: CaseMeta[] = [
   {
+    id: "1",
     name: "Printer Integration",
     year: 2022,
     tag: ["Cloud Services", "SaaS"],
     imageUrl: "https://picsum.photos/200/300",
   },
   {
+    id: "2",
     name: "Tresl official site",
     year: 2022,
     tag: ["Cloud Services", "SaaS"],
     imageUrl: "https://picsum.photos/200/300",
   },
   {
+    id: "3",
     name: "ROEHL App",
     year: 2022,
     tag: ["Cloud Services", "SaaS"],
     imageUrl: "https://picsum.photos/200/300",
   },
   {
+    id: "4",
     name: "168 MONEY \nBackend System",
     year: 2022,
     tag: ["Cloud Services", "SaaS"],

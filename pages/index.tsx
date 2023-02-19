@@ -79,7 +79,7 @@ const Home: NextPage<Props> = ({ tags }) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div>
+      <HomeContainer>
         <Header />
 
         <Main>
@@ -112,12 +112,13 @@ const Home: NextPage<Props> = ({ tags }) => {
           <Intro>
             <h1>
               We build <br />
-              the digital <br className="mobile" />
+              the digital <br className="phone" />
               experience,
               <br />
-              and make it <br className="mobile" />
+              and make it <br className="phone" />
               happen.
             </h1>
+
             <h2>
               A Digital Product Agency
               <br />
@@ -140,7 +141,7 @@ const Home: NextPage<Props> = ({ tags }) => {
         >
           {modal}
         </Modal>
-      </div>
+      </HomeContainer>
     </>
   );
 };
@@ -161,12 +162,23 @@ const SliderContainer = styled.section`
 const Intro = styled.section`
   padding: 1.5rem;
   line-height: 2.5rem;
+  position: relative;
+
+  ${device.laptop} {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+
+  ${device.laptop} {
+    padding-left: 5rem;
+    padding-right: 5rem;
+  }
 
   br {
-    &.mobile {
+    &.phone {
       display: block;
 
-      ${device.laptop} {
+      ${device.tablet} {
         display: none;
       }
     }
@@ -175,10 +187,53 @@ const Intro = styled.section`
   h1 {
     font-size: 2.5rem;
     margin-bottom: 1rem;
+
+    ${device.tablet} {
+      font-size: 4rem;
+      line-height: 4rem;
+      letter-spacing: 0.04em;
+    }
+
+    ${device.laptopL} {
+      font-size: 6rem;
+      line-height: 6rem;
+    }
   }
 
   h2 {
     line-height: 1.25rem;
+    font-weight: normal;
+    font-size: 1rem;
+
+    ${device.tablet} {
+      position: absolute;
+      top: 2.25rem;
+      left: calc(1.5rem + 306px);
+      font-size: 1.25rem;
+      line-height: 28px;
+    }
+
+    ${device.laptop} {
+      left: calc(4rem + 306px);
+    }
+
+    ${device.laptopL} {
+      top: 3.25rem;
+      left: calc(5rem + 460px);
+      letter-spacing: 0.02em;
+
+    }
+  }
+`;
+
+const HomeContainer = styled.div`
+  > main {
+    display: flex;
+    flex-direction: column;
+
+    > section {
+      flex: 1;
+    }
   }
 `;
 
@@ -186,21 +241,30 @@ const FloatContainer = styled.div`
   position: fixed;
   bottom: 60px;
   right: 1.5rem;
+
+  ${device.laptop} {
+    right: 4rem;
+    bottom: 5rem;
+  }
+
+  ${device.laptopL} {
+    right: 5rem;
+  }
 `;
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   let tags = [];
   try {
     tags = await getTags();
-  } catch(err) {
+  } catch (err) {
     console.error(err);
   }
 
   return {
     props: {
-      tags
-    }
-  }
-} 
+      tags,
+    },
+  };
+};
 
 export default Home;
