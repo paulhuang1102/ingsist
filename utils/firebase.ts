@@ -38,3 +38,15 @@ export async function getTags() {
     return null;
   }
 }
+
+export async function getCaseMetas() {
+  try {
+    const snapshot = await get(child(dbRef, `caseMeta`));
+
+    return snapshot.val().filter((v: any) => !!v);
+  } catch (e) {
+    console.error(e);
+
+    return [];
+  }
+}

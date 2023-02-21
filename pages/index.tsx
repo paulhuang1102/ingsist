@@ -13,22 +13,37 @@ import useModal from "@/hooks/useModal";
 import TalkModal from "@/components/Modal/talk";
 import CircleButton from "@/components/Button/circleButton";
 import SliderHighlight from "@/components/Slider/highlight";
-import { getTags } from "@/utils/firebase";
+import { getCaseMetas, getTags } from "@/utils/firebase";
+import { CaseMeta } from "@/models/case";
 
 interface Props {
   tags: string[];
+  metas: CaseMeta[];
 }
-const Home: NextPage<Props> = ({ tags }) => {
+
+interface HState {
+  pos: {
+    x: number;
+    y: number;
+  };
+  show: boolean;
+  image: string;
+  id: string | null;
+}
+
+const Home: NextPage<Props> = ({ tags, metas }) => {
   const center = Math.round(tags.length / 2);
   const item1 = tags.slice(0, center);
   const item2 = tags.slice(center, tags.length);
   const { isOpen, modal, toggle, setModal } = useModal({});
-  const [highlight, setHighlight] = useState({
+  const [highlight, setHighlight] = useState<HState>({
     pos: {
       x: 0,
       y: 0,
     },
     show: false,
+    image: "",
+    id: null,
   });
   const posRef = useRef({
     x: 0,
@@ -37,28 +52,59 @@ const Home: NextPage<Props> = ({ tags }) => {
 
   const timeout = useRef<ReturnType<typeof setTimeout>>();
 
+  const preload = useCallback(() => {
+    for (let m of metas) {
+      const img = new Image();
+      img.src = m.imageUrl;
+    }
+  }, [metas]);
+
   useEffect(() => {
     setModal(<TalkModal close={toggle} />);
-  }, [setModal, toggle]);
+    preload();
+  }, [preload, setModal, toggle]);
 
-  const handleTag = useCallback((e: MouseEvent) => {
-    posRef.current = {
-      x: e.clientX,
-      y: e.clientY,
-    };
+  const handleTag = useCallback(
+    (e: MouseEvent) => {
+      posRef.current = {
+        x: e.clientX,
+        y: e.clientY,
+      };
 
-    clearTimeout(timeout.current);
+      clearTimeout(timeout.current);
 
-    timeout.current = setTimeout(() => {
-      setHighlight({
-        pos: {
-          x: posRef.current.x,
-          y: posRef.current.y,
-        },
-        show: true,
-      });
-    }, 300);
-  }, []);
+      timeout.current = setTimeout(() => {
+        const target = e.target as HTMLAnchorElement;
+
+        const selectedMetas = metas.filter((m) =>
+          m.tag.some((v) => v === target.innerHTML)
+        );
+
+        let select =
+          selectedMetas[Math.floor(Math.random() * selectedMetas.length)];
+
+        // If there is not meta which tag equal to hover item
+        // random a meta
+        if (!select) {
+          select = metas[Math.floor(Math.random() * metas.length)];
+          // console.log("Not Select Tag, Random one");
+        } else {
+          // console.log("Select Tag");
+        }
+
+        setHighlight({
+          pos: {
+            x: posRef.current.x,
+            y: posRef.current.y,
+          },
+          show: true,
+          image: select.imageUrl,
+          id: select.id,
+        });
+      }, 100);
+    },
+    [metas]
+  );
 
   const handleHide = useCallback(() => {
     setHighlight({
@@ -68,6 +114,8 @@ const Home: NextPage<Props> = ({ tags }) => {
         y: posRef.current.y,
       },
       show: false,
+      image: "",
+      id: null,
     });
   }, []);
 
@@ -106,7 +154,12 @@ const Home: NextPage<Props> = ({ tags }) => {
               ))}
             </Slider>
 
-            <SliderHighlight pos={highlight.pos} show={highlight.show} />
+            <SliderHighlight
+              pos={highlight.pos}
+              show={highlight.show}
+              image={highlight.image}
+              id={highlight.id || "0"}
+            />
           </SliderContainer>
 
           <Intro>
@@ -221,7 +274,6 @@ const Intro = styled.section`
       top: 3.25rem;
       left: calc(5rem + 460px);
       letter-spacing: 0.02em;
-
     }
   }
 `;
@@ -254,15 +306,20 @@ const FloatContainer = styled.div`
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   let tags = [];
+
   try {
     tags = await getTags();
   } catch (err) {
     console.error(err);
   }
 
+  // TODO: use Promise.all
+  const metas = await getCaseMetas();
+
   return {
     props: {
       tags,
+      metas,
     },
   };
 };

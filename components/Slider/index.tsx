@@ -84,6 +84,7 @@ const Container = styled.div`
   max-width: 100%;
   transform: rotate(3deg);
   margin-bottom: 1.25rem;
+  z-index: 1;
 `;
 
 const Content = styled.div`
