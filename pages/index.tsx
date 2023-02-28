@@ -15,6 +15,7 @@ import CircleButton from "@/components/Button/circleButton";
 import SliderHighlight from "@/components/Slider/highlight";
 import { getCaseMetas, getTags } from "@/utils/firebase";
 import { CaseMeta } from "@/models/case";
+import { PlayfairDisplayFont } from "@/styles/font";
 
 interface Props {
   tags: string[];
@@ -101,7 +102,7 @@ const Home: NextPage<Props> = ({ tags, metas }) => {
           image: select.imageUrl,
           id: select.id,
         });
-      }, 100);
+      }, 0);
     },
     [metas]
   );
@@ -163,7 +164,7 @@ const Home: NextPage<Props> = ({ tags, metas }) => {
           </SliderContainer>
 
           <Intro>
-            <h1>
+            <h1 className={PlayfairDisplayFont.className}>
               We build <br />
               the digital <br className="phone" />
               experience,
@@ -172,12 +173,30 @@ const Home: NextPage<Props> = ({ tags, metas }) => {
               happen.
             </h1>
 
-            <h2>
+            <h2 className={PlayfairDisplayFont.className}>
               A Digital Product Agency
               <br />
               Based in Taipei, Taiwan.
             </h2>
           </Intro>
+
+          <svg>
+            <filter id="noise">
+              <feTurbulence id="turbulence">
+                <animate
+                  attributeName="baseFrequency"
+                  dur="50s"
+                  values="0.9 0.9;0.8 0.8;0.9 0.9;"
+                  repeatCount={"indefinite"}
+                ></animate>
+              </feTurbulence>
+              <feDisplacementMap
+                in="SourceGraphic"
+                scale="60"
+              ></feDisplacementMap>
+            </filter>
+          </svg>
+          <Bg />
 
           <FloatContainer>
             <CircleButton text={`LET'S\nTALK`} onClick={toggle} />
@@ -200,9 +219,30 @@ const Home: NextPage<Props> = ({ tags, metas }) => {
 };
 
 const Main = styled.main`
-  background: ${primaryColor};
   min-height: 100vh;
   padding-top: 120px;
+
+  svg {
+    width: 0;
+    height: 0;
+  }
+`;
+
+const Bg = styled.div`
+  background: repeating-linear-gradient(
+    ${primaryColor},
+    ${primaryColor} 50%,
+    #000 50%,
+    #000
+  );
+  background-size: 5px 5px;
+  filter: url(#noise);
+  position: absolute;
+  top: -50px;
+  left: -50px;
+  height: calc(100% + 50px);
+  width: calc(100% + 50px);
+  z-index: -1;
 `;
 
 const SliderContainer = styled.section`
@@ -279,12 +319,25 @@ const Intro = styled.section`
 `;
 
 const HomeContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+
   > main {
     display: flex;
     flex-direction: column;
 
     > section {
       flex: 1;
+    }
+
+    ${device.laptop} {
+      section {
+        &:nth-child(2) {
+          margin-top: auto;
+          flex: 0;
+          padding-bottom: 3rem;
+        }
+      }
     }
   }
 `;
@@ -296,7 +349,7 @@ const FloatContainer = styled.div`
 
   ${device.laptop} {
     right: 4rem;
-    bottom: 5rem;
+    bottom: 3rem;
   }
 
   ${device.laptopL} {
