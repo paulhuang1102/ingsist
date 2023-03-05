@@ -15,7 +15,7 @@ interface Props {
 
 const CaseOverview: React.FC<Props> = ({ overview }) => {
   return (
-    <Container>
+    <Container className="paragraph-item-1">
       <Title text="Overview" index={1} />
 
       <div>

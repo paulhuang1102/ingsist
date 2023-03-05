@@ -6,7 +6,7 @@ import { device } from '../../styles/media';
 
 const Header: React.FC = () => {
   return (
-    <H>
+    <H id="header">
       <Link href={'/'}>
         <Image
           src="/assets/images/logo.svg"
@@ -37,7 +37,15 @@ const H = styled.header`
 
   ${device.laptop} {
     padding: 2rem 5rem 1.125rem 5rem;
+    
+    &.sticky {
+      position: fixed;
+      top: 0;
+      background-color: #FFF;
+      transition: 0.5s;
+    }
   }
+
 `;
 
 export default Header;

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Process } from "@/models/process";
 import { fontColor } from "@/styles/theme";
 import { device } from "@/styles/media";
+import Lottie from "lottie-react";
 
 interface Props {
   process: Process;
@@ -27,6 +28,7 @@ const ProcessItem: React.FC<Props> = ({ process }) => {
             height: "auto",
           }}
         />
+        {/* <Lottie animationData={'https://raw.githubusercontent.com/Gamote/lottie-react/main/src/__tests__/assets/groovyWalk.json'} loop/> */}
       </div>
     </Item>
   );

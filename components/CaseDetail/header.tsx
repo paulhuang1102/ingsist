@@ -10,7 +10,7 @@ interface Props {
 
 const CaseDetailHeader: React.FC<Props> = ({ title, year, cover }) => {
   return (
-    <Header cover={cover}>
+    <Header cover={cover} className="detail-header">
       <h1>{title}</h1>
 
       <p>{year}</p>
@@ -44,7 +44,8 @@ const Header = styled.div<{ cover: string }>`
     justify-content: flex-start;
     padding: 2rem 5rem;
     padding-top: 8.5rem;
-
+    height: 760px;
+    transition: 0.3s;
 
     h1 {
       font-size: 4rem;

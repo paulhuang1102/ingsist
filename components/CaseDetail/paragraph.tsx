@@ -13,7 +13,7 @@ interface Props {
 
 const Paragraph: React.FC<Props> = ({ index, block }) => {
   return (
-    <Container>
+    <Container className={`paragraph-item-${index}`}>
       <Title index={index} text={block.title} />
 
       {block.content.map((c, i) => {

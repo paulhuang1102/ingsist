@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
+import { useRef, useEffect, useCallback } from 'react';
 import Header from "@/components/Header";
 import CaseDetailHeader from "@/components/CaseDetail/header";
 import CaseOverview from "@/components/CaseDetail/overview";
@@ -8,8 +9,50 @@ import Main from "@/components/Layout/main";
 import CaseCredit from "@/components/CaseDetail/credit";
 import { caseDetail } from "@/data/cases";
 import Footer from '@/components/Footer';
+import gsap from "gsap";
 
 export default function CaseDetail() {
+  const caseDetailRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+     
+      for (let i = 0; i < caseDetail.paragraph.length + 1; i++) {
+        gsap.from(`.paragraph-item-${i + 1}`, { duration: 1, y: 40, opacity: 0, delay: 0.5 * i});
+      }
+
+      // for (let i = 0; i < clients.length; i++) {
+      //   gsap.from(`.client-item-${i}`, { duration: 0.25, x: 30, delay: 0.25 * i, opacity: 0});
+      // }
+    }, caseDetailRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  const handleScroll = useCallback(() => {
+    const detailHeader = document.querySelector('.detail-header') as HTMLElement;
+    const header = document.querySelector('#header') as HTMLElement;
+
+    if (window.scrollY > 0) {
+      detailHeader.style.height = '245px';
+    } else {
+      detailHeader.style.height = '760px';
+    }
+
+    if (window.scrollY > header.offsetTop) {
+      header.classList.add("sticky");
+
+    } else {
+      header.classList.remove("sticky");
+    }
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener('scroll', handleScroll);
+
+    return () => document.removeEventListener('scroll', handleScroll);
+  })
+
   return (
     <>
       <Head>
@@ -18,7 +61,7 @@ export default function CaseDetail() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div>
+      <div ref={caseDetailRef}>
         <Header />
 
         <CaseDetailHeader title={caseDetail.name} year={caseDetail.year} cover={caseDetail.coverUrl}/>

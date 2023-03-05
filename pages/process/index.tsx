@@ -73,8 +73,8 @@ export default function Process() {
             </H1>
 
             <Wrapper>
-              {process.map((p) => (
-                <ProcessItem process={p} key={p.title} />
+              {process.map((p, i) => (
+                <ProcessItem process={p} key={i} />
               ))}
 
               <div />
