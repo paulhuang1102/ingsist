@@ -16,6 +16,10 @@ import SliderHighlight from "@/components/Slider/highlight";
 import { getCaseMetas, getTags } from "@/utils/firebase";
 import { CaseMeta } from "@/models/case";
 import { PlayfairDisplayFont } from "@/styles/font";
+import gsap from "gsap";
+
+const isChrome = () =>
+  /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
 
 interface Props {
   tags: string[];
@@ -33,6 +37,7 @@ interface HState {
 }
 
 const Home: NextPage<Props> = ({ tags, metas }) => {
+  const homeRef = useRef<HTMLDivElement>(null);
   const center = Math.round(tags.length / 2);
   const item1 = tags.slice(0, center);
   const item2 = tags.slice(center, tags.length);
@@ -61,9 +66,24 @@ const Home: NextPage<Props> = ({ tags, metas }) => {
   }, [metas]);
 
   useEffect(() => {
-    setModal(<TalkModal close={toggle} />);
     preload();
-  }, [preload, setModal, toggle]);
+    setModal(<TalkModal close={toggle} />);
+  }, [setModal, toggle, preload]);
+
+  useEffect(() => {
+    preload();
+
+    if (isChrome()) {
+      document.querySelector(".bg")?.classList.add("noise");
+    }
+
+    let ctx = gsap.context(() => {
+      gsap.from(".info-h1", { duration: 0.8, y: 100, opacity: 0 });
+      gsap.from(".info-h2", { duration: 0.5, y: 50, delay: 0.2, opacity: 0 });
+    }, homeRef);
+
+    return () => ctx.revert();
+  }, [preload]);
 
   const handleTag = useCallback(
     (e: MouseEvent) => {
@@ -128,7 +148,7 @@ const Home: NextPage<Props> = ({ tags, metas }) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <HomeContainer>
+      <HomeContainer ref={homeRef}>
         <Header />
 
         <Main>
@@ -164,7 +184,7 @@ const Home: NextPage<Props> = ({ tags, metas }) => {
           </SliderContainer>
 
           <Intro>
-            <h1 className={PlayfairDisplayFont.className}>
+            <h1 className={`info-h1 ${PlayfairDisplayFont.className}`}>
               We build <br />
               the digital <br className="phone" />
               experience,
@@ -173,7 +193,7 @@ const Home: NextPage<Props> = ({ tags, metas }) => {
               happen.
             </h1>
 
-            <h2 className={PlayfairDisplayFont.className}>
+            <h2 className={`info-h2 ${PlayfairDisplayFont.className}`}>
               A Digital Product Agency
               <br />
               Based in Taipei, Taiwan.
@@ -196,7 +216,7 @@ const Home: NextPage<Props> = ({ tags, metas }) => {
               ></feDisplacementMap>
             </filter>
           </svg>
-          <Bg />
+          <Bg className="bg" />
 
           <FloatContainer>
             <CircleButton text={`LET'S\nTALK`} onClick={toggle} />
@@ -229,20 +249,24 @@ const Main = styled.main`
 `;
 
 const Bg = styled.div`
-  background: repeating-linear-gradient(
-    ${primaryColor},
-    ${primaryColor} 50%,
-    #000 50%,
-    #000
-  );
-  background-size: 5px 5px;
-  filter: url(#noise);
+  background: ${primaryColor};
   position: absolute;
   top: -50px;
   left: -50px;
   height: calc(100% + 50px);
   width: calc(100% + 50px);
   z-index: -1;
+
+  &.noise {
+    background: repeating-linear-gradient(
+      ${primaryColor},
+      ${primaryColor} 50%,
+      #000 50%,
+      #000
+    );
+    background-size: 5px 5px;
+    filter: url(#noise);
+  }
 `;
 
 const SliderContainer = styled.section`

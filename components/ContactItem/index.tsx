@@ -5,11 +5,12 @@ import { Social } from "@/models/contact";
 
 interface Props {
   data: Social;
+  index: number;
 }
 
-const ContactItem: React.FC<Props> = ({ data }) => {
+const ContactItem: React.FC<Props> = ({ data, index }) => {
   return (
-    <a href={data.url} target="_blank" rel="noreferrer">
+    <a href={data.url} target="_blank" rel="noreferrer" className={`contact-items-${index}`}>
       <Item>
         <div className="circle">
           <Image
@@ -41,6 +42,11 @@ const Item = styled.div`
   border-bottom: 0.5px solid #333;
   padding: 2rem 0;
   cursor: pointer;
+  transition: 0.5s;
+
+  &:hover {
+    transform: scale(1.025);
+  }
 
   .circle {
     background-color: #333;

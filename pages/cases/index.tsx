@@ -1,13 +1,35 @@
 import Head from "next/head";
+import { useEffect, useRef } from "react";
 import styled from "styled-components";
 import Header from "@/components/Header";
 import Title from "@/components/Title";
 import Main from "@/components/Layout/main";
 import List from "@/components/List";
 import { caseItems } from "@/data/cases";
-import Footer from '@/components/Footer';
+import Footer from "@/components/Footer";
+import gsap from "gsap";
 
 export default function Cases() {
+  const caseRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      const DELAY = 0.2;
+
+      for (let i = 0; i < caseItems.length; i++) {
+        gsap.from(`.list-item-${i}`, {
+          y: 50,
+          duration: 1,
+          delay: i * DELAY,
+          ease: "debounce",
+          opacity: 0,
+        });
+      }
+    }, caseRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
     <>
       <Head>
@@ -16,7 +38,7 @@ export default function Cases() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div>
+      <div ref={caseRef}>
         <Header />
 
         <Main>
@@ -24,7 +46,7 @@ export default function Cases() {
             <Title text={"Case Studies"} count={29} />
 
             <Ul>
-              {caseItems.map((item) => (
+              {caseItems.map((item, i) => (
                 <List
                   key={item.id}
                   text={item.name}
@@ -33,6 +55,7 @@ export default function Cases() {
                   tags={item.tag}
                   img={item.imageUrl}
                   id={item.id}
+                  index={i}
                 />
               ))}
             </Ul>

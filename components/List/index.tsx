@@ -13,6 +13,7 @@ interface Props {
   tags?: string[];
   img?: string;
   id?: string;
+  index: number
 }
 
 const List: React.FC<Props> = ({
@@ -21,10 +22,11 @@ const List: React.FC<Props> = ({
   expandable = false,
   tags,
   img,
-  id
+  id,
+  index
 }) => {
   return (
-    <L>
+    <L className={`list-item-${index}`}>
       <div>
         <div
           style={{

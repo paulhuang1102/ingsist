@@ -56,6 +56,12 @@ const Container = styled.div`
       line-height: 4.5rem;
     }
   }
+
+  ${device.tablet} {
+    h2 {
+      margin-top: 3rem;
+    }
+  }
 `
 
 export default Title;

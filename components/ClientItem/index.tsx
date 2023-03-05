@@ -6,10 +6,11 @@ import styled from "styled-components";
 
 interface Props {
   client: ClientMeta;
+  index: number;
 }
-const ClientItem: React.FC<Props> = ({ client }) => {
+const ClientItem: React.FC<Props> = ({ client, index }) => {
   return (
-    <Item>
+    <Item className={`client-item-${index}`}>
       <p>{client.name}</p>
 
       <div>

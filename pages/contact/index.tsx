@@ -1,3 +1,4 @@
+import React, { useRef, useEffect } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import styled from "styled-components";
@@ -10,7 +11,8 @@ import { fontColor } from "@/styles/theme";
 import { PlayfairDisplayFont } from "@/styles/font";
 import ContactButton from "@/components/Button/contactButton";
 import { device } from "@/styles/media";
-import Footer from '@/components/Footer';
+import Footer from "@/components/Footer";
+import gsap from "gsap";
 
 const socials: Social[] = [
   {
@@ -41,6 +43,26 @@ const socials: Social[] = [
 ];
 
 export default function Contact() {
+  const contactRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      const DELAY = 0.1;
+
+      for (let i = 0; i < socials.length; i++) {
+        gsap.from(`.contact-items-${i}`, {
+          y: 100,
+          duration: 1,
+          delay: i * DELAY,
+          ease: 'debounce',
+          opacity: 0,
+        });
+      }
+    }, contactRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
     <>
       <Head>
@@ -52,7 +74,7 @@ export default function Contact() {
       <div>
         <Header />
 
-        <Main row={true}>
+        <Main row={true} ref={contactRef}>
           <Section>
             <Title text="Contact" />
 
@@ -70,8 +92,8 @@ export default function Contact() {
               </div>
 
               <GridDiv>
-                {socials.map((s) => (
-                  <ContactItem key={s.name} data={s} />
+                {socials.map((s, i) => (
+                  <ContactItem key={s.name} data={s} index={i} />
                 ))}
               </GridDiv>
             </Container>

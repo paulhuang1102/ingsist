@@ -186,7 +186,6 @@ const Select = styled.div`
     margin-right: 0.5rem;
   }
 
-  
   .mb {
     margin-bottom: 1.5rem;
   }
@@ -213,7 +212,6 @@ const Container = styled.div`
   background-color: #fff;
   padding: 1.5rem;
   border-radius: 0 0 64px 0;
-
 
   > div {
     display: flex;
@@ -251,7 +249,7 @@ const Container = styled.div`
 
   ${device.laptop} {
     border-radius: 0 0 112px 0;
-    padding: 2rem;
+    padding: 5rem;
 
     > div {
       flex-direction: row;
@@ -287,6 +285,15 @@ const Container = styled.div`
 const Title = styled.div`
   padding-bottom: 1.25rem;
   border-bottom: 1px solid #bdbdbd;
+
+  button {
+    cursor: pointer;
+    transition: 0.4s;
+
+    &:hover {
+      transform: rotate(90deg);
+    }
+  }
 
   ${device.laptop} {
     padding-bottom: 2.5rem;

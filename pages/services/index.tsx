@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { useRef, useEffect } from 'react';
 import styled from "styled-components";
 import Main from "@/components/Layout/main";
 import List from "@/components/List";
@@ -7,9 +8,28 @@ import { clients, serviceItems } from "@/data/services";
 import Header from "@/components/Header";
 import ClientItem from "@/components/ClientItem";
 import { device } from "@/styles/media";
-import Footer from '@/components/Footer';
+import Footer from "@/components/Footer";
+import gsap from "gsap";
 
 export default function Services() {
+  const serviceRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+
+    let ctx = gsap.context(() => {
+     
+      for (let i = 0; i < serviceItems.length; i++) {
+        gsap.from(`.list-item-${i}`, { duration: 0.5, y: 20, opacity: 0, delay: 0.2 * i});
+      }
+
+      for (let i = 0; i < clients.length; i++) {
+        gsap.from(`.client-item-${i}`, { duration: 0.25, x: 30, delay: 0.25 * i, opacity: 0});
+      }
+    }, serviceRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
     <>
       <Head>
@@ -18,7 +38,7 @@ export default function Services() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div>
+      <div ref={serviceRef}>
         <Header />
 
         <Main>
@@ -27,7 +47,7 @@ export default function Services() {
 
             <ServiceList>
               {serviceItems.map((item, i) => (
-                <List key={i} text={item}/>
+                <List key={i} text={item} index={i} />
               ))}
             </ServiceList>
           </Section>
@@ -37,7 +57,7 @@ export default function Services() {
 
             <ClientList>
               {clients.map((c, i) => (
-                <ClientItem client={c} key={i} />
+                <ClientItem client={c} key={i} index={i}/>
               ))}
             </ClientList>
           </Section>
@@ -67,15 +87,21 @@ const ServiceList = styled.ul`
 
   ${device.laptopL} {
     grid-template-columns: repeat(2, 1fr);
-    padding-left: 25%; 
+    padding-left: 25%;
   }
-
-`
+`;
 
 const ClientList = styled.ul`
   display: grid;
   gap: 1.125rem;
   grid-template-columns: repeat(2, 1fr);
+
+  /* WORKAROUND: make items from right to left, but effect the order */
+  direction: rtl;
+
+  /* > li {
+    direction: ltr;
+  } */
 
   ${device.mobileL} {
     grid-template-columns: repeat(3, 1fr);
@@ -85,7 +111,7 @@ const ClientList = styled.ul`
     grid-template-columns: repeat(6, 1fr);
     padding-left: 5%;
   }
-  
+
   ${device.laptopL} {
     padding-left: 16%;
   }
